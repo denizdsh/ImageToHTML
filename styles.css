@@ -1,0 +1,100 @@
+html {
+    background-color: rgba(113, 104, 104, 0.481);
+    color: rgb(254, 167, 167);
+    text-shadow: black 1px 1px 1px;
+    font-size: x-large;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input {
+    padding-left: 50px;
+}
+
+label {
+    font-size: x-large;
+}
+
+input, button {
+    font-size: large;
+}
+
+input {
+    margin-inline: 5px;
+}
+
+#draw-btn {
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+input[type="file"] {
+    text-shadow: black 1px 1px 1px;
+    width: fit-content;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.display {
+    position: relative;
+    justify-content: space-between;
+}
+
+.display, .display>article {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.display>article {
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 90px 50px 90px;
+}
+
+.display h2 {
+    margin-bottom: 10px;
+}
+
+.original::after {
+    content: '';
+    background-color: black;
+    height: 100%;
+    width: 2px;
+    border-radius: 10px;
+    position: relative;
+    left: 89px;
+    top: 18pt;
+}
+
+img, .container {
+    max-height: 40vh;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 1px);
+}
+
+.container div {
+    min-width: 1px;
+    max-width: 1px;
+    min-height: 1px;
+    max-height: 1px;
+}
+
+.action-buttons button {
+    margin-inline: 15px;
+}
+
+#output-action {
+    margin-top: 20px;
+}
