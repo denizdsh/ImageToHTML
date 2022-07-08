@@ -10,7 +10,7 @@ const drawBtn = document.getElementById('draw-btn');
 
 const urlInput = document.querySelector('[name="imageUrl"]');
 const fileInput = document.querySelector('[name="imageFile"]');
-const reader = new FileReader();
+const imageReader = new FileReader();
 const HTMLreader = new FileReader();
 
 let canvas, ctx;
@@ -18,7 +18,9 @@ let canvas, ctx;
 img.addEventListener('error', () => {
     toggleAllLoadingMessages(false);
 
-    window.alert('Invalid image (or CORS related problem)');
+    const msg = 'Invalid image (or CORS related problem)';
+    window.alert(msg);
+    throw new Error(msg);
 })
 
 img.addEventListener('load', () => {
@@ -40,7 +42,7 @@ img.addEventListener('load', () => {
 urlInput.addEventListener('input', toggleClearInputButton)
 fileInput.addEventListener('input', toggleClearInputButton)
 
-reader.addEventListener('load', (e) => {
+imageReader.addEventListener('load', (e) => {
     const res = e.target.result;
     console.log('loaded local image');
     img.src = res;
@@ -48,12 +50,12 @@ reader.addEventListener('load', (e) => {
 
 HTMLreader.addEventListener('load', (e) => {
     const res = e.target.result;
-    console.log('loaded local html file');
+    console.log('loaded HTML file for downloading...');
 
     const link = document.createElement('a');
     link.setAttribute('download', 'div_pixels')
     link.setAttribute('target', '_blank')
-    link.href = res;
+    link.setAttribute('href', res);
     link.click();
 })
 
@@ -63,7 +65,7 @@ drawBtn.addEventListener('click', () => {
     toggleAllLoadingMessages(true);
 
     if (fileInput.value) {
-        reader.readAsDataURL(fileInput.files[0]);
+        imageReader.readAsDataURL(fileInput.files[0]);
     } else if (urlInput.value) {
         img.src = urlInput.value;
     } else {
@@ -186,23 +188,15 @@ function showActionButtons() {
 
     createElements(...data)
 }
+
 function downloadOutput() {
-    let doc = document.implementation.createHTMLDocument();
-
-    doc.head.innerHTML = headPattern(resultContainer);
-
-    doc.body.innerHTML = resultContainer.innerHTML;
-
-    // console.log(doc.);
-    const f = new File(doc.all, 'a.html', {
+    const f = new File([outputPattern(resultContainer)], 'div_pixels.html', {
         type: 'text/html',
-        extension: '.html'
     })
-
-    console.log(f)
 
     HTMLreader.readAsDataURL(f);
 }
+
 function copyToClipboard() {
     navigator.clipboard.writeText(outputPattern(resultContainer))
         .then(() => console.log('copied to clipboard'),
